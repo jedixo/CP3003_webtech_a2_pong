@@ -11,9 +11,10 @@ function PowerUp(x, y, colour, text) {
     this.radius = 25;
     this.colour = colour || '#FF0000';
     this.text = text || "D";
-    this.strokeLineWidth = 8;
-    this.textFont = "bold 20pt classicFont";
+    this.strokeLineWidth = 0;
+    this.textFont = "18pt classicFont";
     this.direction = 1;
+    this.textColor = "#000000";
 
     /**
      * draws the power up
@@ -21,17 +22,16 @@ function PowerUp(x, y, colour, text) {
      * @param ctx canvas context for drawing power up
      */
     this.draw = function (ctx) {
-//        console.log("PowerUp: Draw");
-
         ctx.strokeStyle = this.colour;
         ctx.fillStyle = this.colour;
         ctx.lineWidth = this.strokeLineWidth;
         ctx.beginPath();
-        ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-        // ctx.fill();
-        ctx.stroke();
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * 360);
+        ctx.fill();
+        // ctx.stroke();
+        ctx.fillStyle = '#000000';
         ctx.font = this.textFont;
-        ctx.fillText(this.text, this.position.x - 8, this.position.y + 10);
+        ctx.fillText(this.text, this.position.x+1, this.position.y+9);
 
     };
 
@@ -41,12 +41,12 @@ function PowerUp(x, y, colour, text) {
      * @param y the y postion of the power up
      */
     this.move = function () {
-        console.log("PowerUp: Move");
+        //console.log("PowerUp: Move");
         if (this.position.y <= 0 || this.position.y >= 500){
-            console.log("Power-up Change Direction");
+            //console.log("Power-up Change Direction");
             this.direction *= -1;
         }
-        console.log(this.position.y);
+      //  console.log(this.position.y);
         this.position.y += this.direction;
     };
 
@@ -69,22 +69,32 @@ function PowerUp(x, y, colour, text) {
     }
 
     this.hitTest = function (x, y) {
-        // tests if x is too far to the left.
-        if (x < (this.x - this.radius)) {
-            return false;
+        
+        if(x > (this.position.x - this.radius) && x < (this.position.x + this.radius)){
+            // alert("inside x values.");
+            if(y > (this.position.y - this.radius) && y < (this.position.y + this.radius)){
+            // alert("inside y values.");
+                return true;
+            }
         }
-        // tests if x is too far to the right.
-        if (x > (this.x + this.radius)) {
-            return false
-        }
-        // tests if y is too high.
-        if (y < (this.y - this.radius)) {
-            return false;
-        }
-        // tests if y is too low.
-        if (y > (this.y + this.radius)) {
-            return false;
-        }
-        return true;
+        return false;
+        
+        // // tests if x is too far to the left.
+        // if (x < (this.x - this.radius)) {
+        //     return false;
+        // }
+        // // tests if x is too far to the right.
+        // if (x > (this.x + this.radius)) {
+        //     return false
+        // }
+        // // tests if y is too high.
+        // if (y < (this.y - this.radius)) {
+        //     return false;
+        // }
+        // // tests if y is too low.
+        // if (y > (this.y + this.radius)) {
+        //     return false;
+        // }
+        // return true;
     }
 };

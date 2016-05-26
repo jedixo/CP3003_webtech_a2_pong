@@ -57,11 +57,18 @@ function Paddle(x, colour) {
      * 
      * @param x the postion x of the object
      * @param y the position y of the object
+     * @param xVelocity the x velocity of the object approaching the paddle
      * @returns true or false for hit by object
      */
-    this.hitTest = function (x, y) {
-        if (x <= (this.position.x + this.dimensions.width) && (y >= this.position.y && y <= (this.position.y + this.dimensions.length))) {
-            return true;
+    this.hitTest = function (x, y, paddleNum) {
+        if (paddleNum == 0){ //approaching player 1
+            if (x <= (this.position.x + this.dimensions.width) && (y >= this.position.y && y <= (this.position.y + this.dimensions.length))) {
+                return true;
+            }
+        }else { //approachign player 2
+            if (x >= (this.position.x) && (y >= this.position.y && y <= (this.position.y + this.dimensions.length))) {
+                return true;
+            }
         }
         return false;
     }
@@ -69,7 +76,7 @@ function Paddle(x, colour) {
     /**
      * if hit, find out where on the paddle the object hit
      * 
-     * @param y the position of y of the object
+     * @param y the y position of the object
      * @returns 1 = upper third, 2 = middle, 3 = lower third 
      */
     this.getHitPosition = function (y) {
@@ -94,13 +101,6 @@ function Paddle(x, colour) {
      */
     this.hitTest2 = function (x, y) {
         if (x >= (this.position.x) && (y >= this.position.y && y <= (this.position.y + this.dimensions.length))) {
-            //        if (y < this.position.y + 1/3*this.dimensions.length){
-            //            console.log("upper third hit")
-            //        } else if ((y > this.position.y + 1/3*this.dimensions.length) &&(y < this.position.y + 2/3*this.dimensions.length)){
-            //            console.log("middle third hit")
-            //        } else{
-            //            console.log("lower third hit")
-            //        }
             return true;
         }
         return false;

@@ -5,17 +5,11 @@
  * @param y (description)
  */
 function FastBall(x, y, a) {
-    PowerUp.call(this, x, y, "#FF0000", "M");
+    PowerUp.call(this, x, y, "#00FFFF", "F");
     this.balls = a;
 }
 
 FastBall.prototype = Object.create(PowerUp.prototype, {
-    //draw: {
-        //value: function () {
-        //    console.log('FastBall: draw');
-        //}
-    //},
-
     execute: {
         value: function () {
             console.log("FastBall Execute!");

@@ -16,9 +16,9 @@ function Ball() {
         var xDir = (Math.random() < 0.5) ? -1 : 1;
         var yDir = (Math.random() < 0.5) ? -1 : 1;
         //generate random y speed
-        var ySpd = spd * Math.abs(Math.random() * spd);
-        //ensure x speed is always lareger than y speed
-        var xSpd = spd * Math.abs((Math.random() * (spd - ySpd)) + ySpd);
+        var ySpd = Math.abs(Math.random() * spd + spd);
+        //ensure x speed is always larger than y speed
+        var xSpd = Math.abs((Math.random() * (spd - ySpd)) + ySpd);
         return { x: xDir * xSpd, y: yDir * ySpd };
     }
 
@@ -57,23 +57,33 @@ function Ball() {
     };
 
     /**
-     * bounce the ball in the x direction 
+     * invert the balls velocity in the x direction 
      */
     this.bounceX = function () {
         this.velocity.x = this.velocity.x * -1;
     };
 
     /**
-     * bounce the ball in the x direction 
+     * invert the balls velocity in the y direction 
      */
-    this.bounceY = function (scaler) {
-        this.velocity.y = this.velocity.y * -1 * scaler;
+    this.bounceY = function () {
+        this.velocity.y = this.velocity.y * -1;
     };
+    
+    this.increaseYspeed = function (){
+        this.velocity.y += speedDelta; 
+    }
+    
+    this.decreaseYspeed = function (){
+        if (this.velocity.y > speedDelta){
+            this.velocity.y -= speedDelta;
+        }
+    }
 
     /**
      * increases the speed of the ball
      */
-    this.increaseSpeed = function () {
+    this.increaseXspeed = function () {
         if (this.velocity.x > 0) {
             this.velocity.x += this.speedDelta;
         } else {
@@ -102,8 +112,7 @@ function Ball() {
         drawCircle(this.position.x, this.position.y, this.radius, ctx);
 
         this.move();
-
-
+        
         /**
          * local circle drawing function, doesn't need public access
          * 
