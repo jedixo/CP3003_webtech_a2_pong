@@ -7,6 +7,7 @@
 function FastBall(x, y, a) {
     PowerUp.call(this, x, y, "#00FFFF", "F");
     this.balls = a;
+    this.type = "fb"
 }
 
 FastBall.prototype = Object.create(PowerUp.prototype, {
